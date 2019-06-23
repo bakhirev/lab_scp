@@ -59,6 +59,7 @@
         _getSoundUrl(code) {
             if (code === 10) return './mp3/pass.mp3';
             if (code === 20) return './mp3/time.mp3';
+            if (code === 22) return './mp3/time.mp3';
             if (code === 21) return './mp3/radiation.mp3';
             if (code === 100) return './mp3/dead.mp3';
             return null;

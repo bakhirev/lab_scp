@@ -17,6 +17,8 @@
     <link href="./applications/game_ui/style/load.css" rel="stylesheet" type="text/css"/>
     <link href="./applications/game_ui/style/save.css" rel="stylesheet" type="text/css"/>
     <link href="./applications/game_ui/style/records.css" rel="stylesheet" type="text/css"/>
+    <link href="./applications/game_ui/style/modal_window.css" rel="stylesheet" type="text/css"/>
+    <link href="./applications/game_ui/style/choose_level.css" rel="stylesheet" type="text/css"/>
 
     <link href="style/display.css" rel="stylesheet" type="text/css"/>
     <link href="style/damage.css" rel="stylesheet" type="text/css"/>
@@ -28,19 +30,18 @@
 <body>
 
 <div class="display__container">
-    <input type="text" class="display__input" id="joystick" />
     <canvas width="800px" height="600px" class="display__view" id="view"></canvas>
-    <canvas id='mini_map_display' class="display__map"></canvas>
+    <canvas class="display__map"  id="mini_map_display"></canvas>
     <div id='damage_screen' class="hidden"></div>
-    <div class="display__timer">
+    <div class="display__timer" id="display__time_container">
         <p class="display__value" id="display__time">00:00</p>
         <p class="display__description">прохождение</p>
     </div>
-    <div class="display__destroy">
+    <div class="display__destroy" id="display__samosbor_container">
         <p class="display__value" id="display__samosbor">00:59</p>
         <p class="display__description">самосбор</p>
     </div>
-    <div class="display__health">
+    <div class="display__health" id="display__health_container">
         <p class="display__value" id="display__health">100</p>
         <p class="display__description">здоровье</p>
     </div>
@@ -48,13 +49,21 @@
 </div>
 
 <div class="game_ui__background" id="game_ui__background">
-    <img src="images/gameplay/bg.jpg" class="game_ui__bg_a">
-    <img src="images/gameplay/bg2.jpg" class="game_ui__bg_b">
+    <img src="./images/background/small_ring.png" class="game_ui__bg__small_ring" id="game_ui__bg__small_ring" />
+    <img src="./images/background/middle_ring.png" class="game_ui__bg__middle_ring" id="game_ui__bg__middle_ring" />
+    <img src="./images/background/road.png" class="game_ui__bg__road" id="game_ui__bg__road" />
+    <img src="./images/background/big_ring.png" class="game_ui__bg__big_ring" id="game_ui__bg__big_ring" />
+    <img src="./images/background/light.png" class="game_ui__bg__light" id="game_ui__bg__light" />
+    <img src="./images/background/octopus_1.png" class="game_ui__bg__octopus_1" id="game_ui__bg__octopus_1" />
+    <img src="./images/background/octopus_2.png" class="game_ui__bg__octopus_2" id="game_ui__bg__octopus_2" />
+    <img src="./images/background/octopus_3.png" class="game_ui__bg__octopus_3" id="game_ui__bg__octopus_3" />
+    <img src="./images/background/octopus_4.png" class="game_ui__bg__octopus_4" id="game_ui__bg__octopus_4" />
+    <img src="./images/background/ripple.png" class="game_ui__bg__ripple" id="game_ui__bg__ripple" />
     <div class="custom__pass">
         <div class="custom__pass_title">Испытуемый №4383283</div>
         <div class="custom__pass_title">ФИО: Иванов Иван Иванович</div>
         <div class="custom__pass_title">гор. Санкт-Петербург</div>
-        <div class="custom__pass_title">отдел: 2ch</div>
+        <div class="custom__pass_title">количество тестов: 2</div>
         <div class="custom__pass_photo"></div>
     </div>
 </div>
@@ -77,6 +86,7 @@
 
 <!-- Utils -->
 <script defer src="./module/polyfills/require__dev.js"></script>
+<script defer src="./module/formatting/index.js"></script>
 <script defer src="./module/merge/index.js"></script>
 <script defer src="./module/mouse_coordinates/index.js"></script>
 <script defer src="./module/events/index.js"></script>
@@ -92,8 +102,11 @@
 <script defer src="./module/dom/index.js"></script>
 <script defer src="./module/templating_engine/index.js"></script>
 <script defer src="./module/audio/index.js"></script>
+<script defer src="./module/prolapse/index.js"></script>
+<script defer src="./module/rotate/index.js"></script>
 
 <!-- Game -->
+<script defer src="./applications/game/level/config.js"></script>
 <script defer src="./applications/game/level/level.js"></script>
 <script defer src="./applications/game/level/parts.js"></script>
 <script defer src="./applications/game/level/distance.js"></script>
@@ -116,16 +129,21 @@
 <script defer src="./applications/game/main_menu.js"></script>
 
 <!-- Game UI -->
+<script defer src="./applications/game_ui/storage.js"></script>
 <script defer src="./applications/game_ui/common.js"></script>
 <script defer src="./applications/game_ui/options.js"></script>
 <script defer src="./applications/game_ui/victory.js"></script>
 <script defer src="./applications/game_ui/game_over.js"></script>
-<script defer src="./applications/game_ui/new_game.js"></script>
+<script defer src="./applications/game_ui/tournament.js"></script>
+<script defer src="./applications/game_ui/levels.js"></script>
 <script defer src="./applications/game_ui/records.js"></script>
 <script defer src="./applications/game_ui/load.js"></script>
 <script defer src="./applications/game_ui/save.js"></script>
 <script defer src="./applications/game_ui/menu.js"></script>
 <script defer src="./applications/game_ui/index.js"></script>
+
+<!-- Style UI -->
+<script defer src="./applications/style/index.js"></script>
 
 <!-- Demo -->
 <script defer src="./index.js"></script>

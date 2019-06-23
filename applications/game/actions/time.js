@@ -1,8 +1,10 @@
 (function () {
 
+    const formatting = require('formatting');
+
     class GameTime {
-        constructor(element) {
-            this.element = element;
+        constructor(elements) {
+            this.elements = elements;
             this._limit = 1000;
             this._time = 0;
             this._cache = 0;
@@ -19,19 +21,16 @@
 
         getTimeShift(code, timeShift) {
             if (code === 20) return 4 * timeShift;
+            if (code === 22) return timeShift / 4;
             return timeShift;
         }
 
         render() {
-            const timeInSeconds = Math.floor(this.total / 1000);
-            if (!this.element || this._cache === timeInSeconds) return;
+            const formattedTime = formatting.getTime(this.total);
+            if (!this.elements.time || this._cache === formattedTime) return;
 
-            this._cache = timeInSeconds;
-            let minutes = Math.floor(timeInSeconds / 60);
-            let seconds = timeInSeconds - minutes * 60;
-            if (minutes < 10) minutes = `0${minutes}`;
-            if (seconds < 10) seconds = `0${seconds}`;
-            this.element.innerHTML = `${minutes}:${seconds}`;
+            this._cache = formattedTime;
+            this.elements.time.innerHTML = formattedTime;
         }
 
         save() {

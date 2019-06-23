@@ -39,6 +39,10 @@
 
     cursor: pointer;
     border: 1px solid white;
+    background-color: transparent;
+}
+
+.game_ui__button {
     background-color: rgba(0, 0, 0, 0.9);
 }
 

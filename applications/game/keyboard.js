@@ -10,44 +10,20 @@
             this._prevX = 0;
             this._deltaRotate = 0;
 
-            this._onMouseMove = this._onMouseMove.bind(this);
-            this._onMouseOver = this._onMouseOver.bind(this);
-            this._onMouseDown = this._onMouseDown.bind(this);
             this._onKeyDown = this._onKeyDown.bind(this);
             this._onKeyUp = this._onKeyUp.bind(this);
             this._setEvents();
         }
 
         _setEvents() {
-            // this.elements.display.addEventListener('mousemove', this._onMouseMove, false);
-            // this.elements.display.addEventListener('mouseover', this._onMouseOver, false);
-            // this.elements.display.addEventListener('mousedown', this._onMouseDown, false);
             document.body.addEventListener('keydown', this._onKeyDown, false);
             document.body.addEventListener('keyup', this._onKeyUp, false);
-        }
-
-        _onMouseMove(event) {
-            const speed = 9;
-            const dx = (this._prevX - event.clientX) * speed;
-            this._prevX = event.clientX;
-            this._deltaRotate += 0.01 * Math.sign(dx) * speed;
-        }
-
-        _onMouseOver() {
-            this._prevX = 0;
         }
 
         getDeltaRotate() {
             const delta = this._deltaRotate;
             this._deltaRotate = 0;
             return delta;
-        }
-
-        _onMouseDown(event) {
-            dom_events.stopEvent(event);
-            const code = event.keyCode;
-            this.elements.input.focus();
-            return false;
         }
 
         _onKeyDown(event) {

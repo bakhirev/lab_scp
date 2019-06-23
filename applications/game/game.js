@@ -2,6 +2,7 @@
 
     const EventEmitter = require('EventEmitter');
     const level = require('level');
+    const gameLevelConfig = require('gameLevelConfig');
     const gameLevelGame = require('gameLevelGame');
     const gameLevelDistance = require('gameLevelDistance');
     const Render = require('Render');
@@ -42,8 +43,8 @@
         }
 
         _setObjects() {
-            this._gameTime = new GameTime(this.elements.time);
-            this._gameSamosbor = new GameSamosbor(this.elements.samosbor);
+            this._gameTime = new GameTime(this.elements);
+            this._gameSamosbor = new GameSamosbor(this.elements);
             this._gamePlayer = new GamePlayer(this.elements);
             this._gamePass = new GamePass(this.elements);
             this._gameSamosbor.on('begin', () => {
@@ -54,14 +55,19 @@
             });
         }
 
-        _setLevel() {
+        _setLevel(levelId) {
             this.cameraPosition = {
                 move: [125 + 62, 0, 125 + 62],
                 rotate: [0, 0, 0]
             };
+            const [width, height] = gameLevelConfig.getWidthHeight(levelId);
+            this.width = width;
+            this.height = height;
+            this._levelPosition = {};
             this._level = level.getLevel(this.width, this.height);
             this._distance = gameLevelDistance.getDistanceMap(this._level);
-            this._levelGame = gameLevelGame.getGameLevel(this._level, this._distance);
+            this._levelGame = gameLevelGame.getGameLevel(this._level, this._distance, levelId);
+            this._gamePass.setCorrectKeys(this._levelGame);
             this._map.mapLevel = level.getMap(this.width, this.height);
             this._map.resize(this._levelGame);
             this._render.clearCash();
@@ -93,7 +99,11 @@
             this._prevTimer = (new Date()).getTime();
             clearInterval(this._timer);
             this._timer = setInterval(() => {
-                const speed = 5;
+                let speed = 5;
+                if (this._levelPosition.row && this._levelPosition.column) {
+                    const prevCode = this._levelGame[this._levelPosition.row][this._levelPosition.column];
+                    if (prevCode === 22) speed = 0.5;
+                }
                 const { dx, dz } = this._joystick.getDeltaPosition(this.cameraPosition, speed);
                 this._levelPosition = this._physics.addCollision(this.cameraPosition, this._levelGame, { dx, dz });
                 this._map.markVisited(this._levelPosition);
@@ -109,7 +119,7 @@
                 const timeShift = this._updatePrevTime();
                 const currentTimeShift = this._gameTime.getTimeShift(code, timeShift);
                 if (code === 100) {
-                    if (!this._isEnd) this._eventEmitter.emit('victory');
+                    if (!this._isEnd) this._eventEmitter.emit('victory', this._gameTime.total);
                     if (!this._isEnd) this._audio.playOnce(100);
                     this._isEnd = true;
                 }
@@ -130,9 +140,11 @@
         }
 
         _draw(code, samosborDistance) {
-            let mode = code === 20 ? 'time' : null;
-            if (samosborDistance < 10) mode = 'samosbor_min';
-            if (samosborDistance < 5) mode = 'samosbor_max';
+            let mode = null;
+            if (code === 20) mode = 'time';
+            if (code === 22) mode = 'time';
+            if (samosborDistance < 20) mode = 'samosbor_min';
+            if (samosborDistance < 10) mode = 'samosbor_max';
             this._render.render(this._levelGame, this.cameraPosition, mode);
 
             const samosborPosition = this._gameSamosbor.getPosition();
@@ -141,7 +153,7 @@
             this._gameSamosbor.render();
             this._gamePlayer.render();
             if (this._gamePlayer.health === 0) {
-                if (!this._isEnd) this._eventEmitter.emit('game_over');
+                if (!this._isEnd) this._eventEmitter.emit('game_over', this._gameTime.total);
                 if (!this._isEnd) this._audio.playOnce(100);
                 this._isEnd = true;
             }
@@ -151,6 +163,13 @@
             this._map.resize({ width: 200, height: 200 });
             this._render.resize();
             this._render();
+        }
+
+        _setStyleForDisplayElements(className) {
+            this.elements.timeContainer.className = className || 'display__timer';
+            this.elements.samosborContainer.className = className || 'display__destroy';
+            this.elements.healthContainer.className = className || 'display__health';
+            this.elements.map.className = className || 'display__map';
         }
 
         save() {
@@ -187,20 +206,22 @@
         }
 
         pause() {
-            // if (this._isEnd) return;
             clearInterval(this._timer);
             this._audio.pause();
+            this._setStyleForDisplayElements('hidden');
         }
 
         play() {
             if (this._isEnd) return;
+            this._setStyleForDisplayElements();
             this._beginGameLoop();
             this._audio.play();
         }
 
-        rePlay() {
+        rePlay(levelId = 0) {
             this.pause();
-            this._setLevel();
+            this._setStyleForDisplayElements();
+            this._setLevel(levelId);
             this._setCameraPosition();
             this._isEnd = false;
             this.play();

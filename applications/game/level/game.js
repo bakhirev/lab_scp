@@ -6,24 +6,28 @@
     // 100 выход
     const level = require('level');
     const gameLevelParts = require('gameLevelParts');
+    const gameLevelConfig = require('gameLevelConfig');
 
     const methods = {
-        getGameLevel(originMap, distance) {
+        getGameLevel(originMap, distance, levelId) {
             let gameLevel = [...originMap].map(row => row.map(code => code === 1 ? 9 : code));
             let notUsedParts = gameLevelParts.getParts(gameLevel);
             notUsedParts.sort(() => Math.random() - 0.5);
 
-            [gameLevel, notUsedParts] = this._addRadiationInLevel(gameLevel, notUsedParts, distance.begin);
-            [gameLevel, notUsedParts] = this._addTimeAnomaliesInLevel(gameLevel, notUsedParts, distance.begin);
+            [gameLevel, notUsedParts] = this._addRadiationInLevel(gameLevel, notUsedParts, distance.begin, levelId);
+            [gameLevel, notUsedParts] = this._addFastTimeAnomaliesInLevel(gameLevel, notUsedParts, distance.begin, levelId);
+            [gameLevel, notUsedParts] = this._addSlowlyTimeAnomaliesInLevel(gameLevel, notUsedParts, distance.begin, levelId);
 
-            this._addPass(gameLevel, distance.deadlocks[0], 10); // pass
-            this._addPass(gameLevel, distance.deadlocks[1], 11);
-            this._addPass(gameLevel, distance.deadlocks[2], 12);
+            if (levelId > 5) this._addPass(gameLevel, distance.deadlocks[0], 10); // pass
+            if (levelId > 7) this._addPass(gameLevel, distance.deadlocks[1], 11);
+            if (levelId > 9) this._addPass(gameLevel, distance.deadlocks[2], 12);
 
             gameLevel[distance.end.row][distance.end.column] = 100; // ends
 
-            const [row, column] = this._getPrevPoint(gameLevel, distance.end.row, distance.end.column);
-            gameLevel[row][column] = 1;
+            if (levelId > 5) {
+                const [row, column] = this._getPrevPoint(gameLevel, distance.end.row, distance.end.column);
+                gameLevel[row][column] = 1;
+            }
 
             return gameLevel;
         },
@@ -36,9 +40,8 @@
             if (gameLevel[row][column - 1]) return [row, column - 1];
             if (gameLevel[row][column + 1]) return [row, column + 1];
         },
-        _addTimeAnomaliesInLevel(gameLevel, parts, respawnPoint) {
-            console.dir(parts);
-            const timeLimit = 4;
+        _addFastTimeAnomaliesInLevel(gameLevel, parts, respawnPoint, levelId) {
+            const timeLimit = gameLevelConfig.getNumberFastTimeAnomaliesInLevel(levelId);
             let count = 0;
             const notUsedParts = parts.filter(part => {
                 if (count > timeLimit
@@ -51,8 +54,23 @@
             });
             return [gameLevel, notUsedParts];
         },
-        _addRadiationInLevel(gameLevel, parts, respawnPoint) {
-            const radiationLimit = 14;
+        _addSlowlyTimeAnomaliesInLevel(gameLevel, parts, respawnPoint, levelId) {
+            if (levelId < 9) return [gameLevel, parts];
+            const timeLimit = gameLevelConfig.getNumberSlowlyTimeAnomaliesInLevel(levelId);
+            let count = 0;
+            const notUsedParts = parts.filter(part => {
+                if (count > timeLimit
+                    || (part.size < 2 || part.size > 3)
+                    || (respawnPoint.row === part.begin[0] && respawnPoint.column === part.begin[1])
+                    || (respawnPoint.row === part.end[0] && respawnPoint.column === part.end[1])) return true;
+                count += 1;
+                gameLevel = this._replacePart(gameLevel, part, 22);
+                return false;
+            });
+            return [gameLevel, notUsedParts];
+        },
+        _addRadiationInLevel(gameLevel, parts, respawnPoint, levelId) {
+            const radiationLimit = gameLevelConfig.getNumberRadiationInLevel(levelId);
             let radiation = 0;
             const notUsedParts = parts.filter(part => {
                 if (radiation > radiationLimit

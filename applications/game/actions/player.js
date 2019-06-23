@@ -19,10 +19,10 @@
         }
 
         _update(code, samosborDistance) {
-            if (code === 21) this.addDamage(5);
-            if (samosborDistance < 2) this.addDamage(15);
-            else if (samosborDistance < 4) this.addDamage(10);
-            else if (samosborDistance < 10) this.addDamage(5);
+            if (code === 21) this.addDamage(5); //  this.addDamage(5);
+            if (samosborDistance < 5) this.addDamage(15);
+            else if (samosborDistance < 10) this.addDamage(10);
+            else if (samosborDistance < 15) this.addDamage(5); //  this.addDamage(5);
         }
 
         addDamage(damage) {

@@ -1,6 +1,7 @@
 (function () {
 
     const dom_elements = require('dom_elements');
+    const StyleUi = require('StyleUi');
     const GameUi = require('GameUi');
     const Game = require('Game');
 
@@ -44,9 +45,11 @@
             samosbor: 'display__samosbor',
             health: 'display__health',
             time: 'display__time',
-            input: 'joystick',
             damage: 'damage_screen',
             pass: 'pass',
+            timeContainer: 'display__time_container',
+            samosborContainer: 'display__samosbor_container',
+            healthContainer: 'display__health_container'
         });
         const game = new Game(elements, images);
 
@@ -57,18 +60,38 @@
         });
         const gameUi = new GameUi(elementsUi, game);
 
-        game.on('victory', function() {
+        game.on('victory', function(time) {
+            gameUi.updateRecords(time);
+            gameUi.updateLevel();
             gameUi.isPlaying = false;
             setTimeout(() => {
                 gameUi.show('victory');
             }, 2000);
         });
-        game.on('game_over', function() {
+        game.on('game_over', function(time) {
+            gameUi.time = time;
             gameUi.isPlaying = false;
             setTimeout(() => {
                 gameUi.show('game_over');
             }, 2000);
         });
+
+
+        const backgroundElements = dom_elements.get({
+            smallRing: 'game_ui__bg__small_ring',
+            middleRing: 'game_ui__bg__middle_ring',
+            road: 'game_ui__bg__road',
+            bigRing: 'game_ui__bg__big_ring',
+            light: 'game_ui__bg__light',
+            octopus1: 'game_ui__bg__octopus_1',
+            octopus2: 'game_ui__bg__octopus_2',
+            octopus3: 'game_ui__bg__octopus_3',
+            octopus4: 'game_ui__bg__octopus_4',
+            ripple: 'game_ui__bg__ripple',
+        });
+
+        const style = new StyleUi(backgroundElements);
     });
 
 })();
+// document.oncontextmenu = function (){return false};

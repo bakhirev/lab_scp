@@ -2,12 +2,14 @@
     position: absolute;
     right: -3em;
     bottom: 1em;
-    transform: rotateZ(-23deg);
+    z-index: 0;
 
     display: block;
     padding: 1em 1em 1em 7em;
+    transform: rotateZ(-23deg);
 
     border: 1px solid white;
+    background-color: black;
 }
 
 .custom__pass_title {

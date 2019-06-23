@@ -75,7 +75,7 @@
                 '}',
 
                 'vec3 getDiffuse(vec3 sunnyColor, vec3 lightDirection, vec3 v_normal) {',
-                '  float strength = 0.6;',
+                '  float strength = 0.8;',
                 '  float diff = max(dot(v_normal, lightDirection), 0.0) * strength;',
                 '  return sunnyColor * diff;',
                 '}',
@@ -103,7 +103,7 @@
                 '  vec3 sunnyColor = vec3(0.9, 0.6, 0.3);',
                 // '  vec3 sunnyColor = vec3(0.6, 0.9, 0.3);',
 
-                '  float ambientStrength = 0.5;', // фоновое освещение
+                '  float ambientStrength = 0.8;', // фоновое освещение
                 '  vec3 ambient = getAmbient(sunnyColor, ambientStrength);',
                 '  vec3 lightDirection = vec3(0.5, 0.3, 0.5);',
                 '  vec3 diffuse = getDiffuse(sunnyColor, lightDirection, v_normal);',
@@ -113,7 +113,7 @@
                 // '  vec3 originalColor = ambient * textureColor.rgb;',
                 '  vec3 total = addFog(v_position, originalColor);',
 
-                // '  if(total.r < 0.2) discard;',
+                // '  if(total.r < 0.1) discard;',
                 // '  else gl_FragColor = vec4(total.rgb, textureColor.a);',
 
                 '  gl_FragColor = vec4(total.rgb, textureColor.a);',

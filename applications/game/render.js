@@ -103,7 +103,7 @@
         _updateFieldOfViewInRadians(mode) {
             let normal = 20;
             if (mode === 'time') normal = 21.1;
-            if (mode === 'samosbor_min') normal = 20.7;
+            if (mode === 'samosbor_min') normal = 20.1;
             if (mode === 'samosbor_max') normal = 21.1;
             if (this._fieldOfViewInRadians < normal) this._fieldOfViewInRadians += this._dFieldOfViewInRadians;
             if (this._fieldOfViewInRadians > normal) this._fieldOfViewInRadians -= this._dFieldOfViewInRadians;

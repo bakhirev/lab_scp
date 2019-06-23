@@ -1,0 +1,36 @@
+.game_ui__modal_window {
+    display: block;
+    width: 30em;
+    padding: 1em 0;
+    margin: 1em auto;
+}
+
+.game_ui__modal_image {
+    display: block;
+    width: 10em;
+    height: 10em;
+    margin: .5em auto;
+    padding: 0;
+}
+
+.game_ui__modal_title,
+.game_ui__modal_text {
+    font-family: "Number", Verdana, serif;
+    font-size: 2em;
+    font-weight: 100;
+
+    display: block;
+    width: 70%;
+    padding: 0 0;
+    margin: 0 auto;
+
+    text-decoration: none;
+    white-space: normal;
+    letter-spacing: 3px;
+
+    color: white;
+}
+
+.game_ui__modal_text {
+    font-size: 1.5em;
+}

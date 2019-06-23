@@ -3,11 +3,23 @@
     const templatingEngine = require('templatingEngine');
 
     class GamePass {
-        constructor(elements) { // damage
+        constructor(elements) {
             this.elements = elements;
-            this._correctKeys = [10, 11, 12];
+            this._allCorrectKeys = [10, 11, 12];
+            this._correctKeys = [];
             this._keys = [];
             this._cache = 0;
+        }
+
+        setCorrectKeys(gameLevel) {
+            this._correctKeys = [];
+            gameLevel.forEach(row => {
+                row.forEach(code => {
+                    if (this._allCorrectKeys.includes(code)) {
+                        this._correctKeys.push(code);
+                    }
+                });
+            });
         }
 
         checkCode(code, levelGame, levelPosition) {

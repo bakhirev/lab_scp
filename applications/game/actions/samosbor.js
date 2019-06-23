@@ -1,12 +1,13 @@
 (function () {
 
+    const formatting = require('formatting');
     const level = require('level');
     const EventEmitter = require('EventEmitter');
     const gameLevelDistance = require('gameLevelDistance');
 
     class GameSamosbor {
-        constructor(element) {
-            this.element = element;
+        constructor(elements) {
+            this.elements = elements;
             this._limit = 59 * 1000;
             this._cache = 0;
             this.total = this._limit;
@@ -58,15 +59,11 @@
         }
 
         render() {
-            const timeInSeconds = Math.floor(this.total / 1000);
-            if (!this.element || this._cache === timeInSeconds) return;
+            const formattedTime = formatting.getTime(this.total);
+            if (!this.elements.samosbor || this._cache === formattedTime) return;
 
-            this._cache = timeInSeconds;
-            let minutes = Math.floor(timeInSeconds / 60);
-            let seconds = timeInSeconds - minutes * 60;
-            if (minutes < 10) minutes = `0${minutes}`;
-            if (seconds < 10) seconds = `0${seconds}`;
-            this.element.innerHTML = `${minutes}:${seconds}`;
+            this._cache = formattedTime;
+            this.elements.samosbor.innerHTML = formattedTime;
         }
 
         getDistance(position) {

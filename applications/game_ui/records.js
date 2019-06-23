@@ -1,5 +1,6 @@
 (function() {
 
+    const formatting = require('formatting');
     const EventEmitter = require('EventEmitter');
     const templatingEngine = require('templatingEngine');
     const gameUiCommon = require('gameUiCommon');
@@ -50,17 +51,8 @@
             this.render();
         }
 
-        _getFormattedTime(timeInMilliseconds) {
-            const timeInSeconds = Math.floor(timeInMilliseconds / 1000);
-            let minutes = Math.floor(timeInSeconds / 60);
-            let seconds = timeInSeconds - minutes * 60;
-            if (minutes < 10) minutes = `0${minutes}`;
-            if (seconds < 10) seconds = `0${seconds}`;
-            return `${minutes}:${seconds}`;
-        }
-
         _getTableRow(data) {
-            const score = this._getFormattedTime(data.score);
+            const formattedTime = formatting.getTime(data.score);
             return { tag: 'div', content: [
                 { tag: 'div', content: [
                     { tag: 'div', content: data.position, attributes: { className: 'game_ui__records_text' } }
@@ -69,7 +61,7 @@
                     { tag: 'div', content: data.name, attributes: { className: 'game_ui__records_text' } }
                 ], attributes: { className: 'game_ui__records_name' } },
                 { tag: 'div', content: [
-                    { tag: 'div', content: score, attributes: { className: 'game_ui__records_text' } }
+                    { tag: 'div', content: formattedTime, attributes: { className: 'game_ui__records_text' } }
                 ], attributes: { className: 'game_ui__records_score' } }
             ], attributes: { className: 'game_ui__records_row' } };
         }

@@ -7,29 +7,37 @@
     const GameUiMenu = require('GameUiMenu');
     const GameUiRecords = require('GameUiRecords');
     const GameUiOptions = require('GameUiOptions');
-    const GameUiNewGame = require('GameUiNewGame');
+    const GameUiTournament = require('GameUiTournament');
     const GameUiVictory = require('GameUiVictory');
     const GameUiGameOver = require('GameUiGameOver');
+    const GameUiLevels = require('GameUiLevels');
+    const gameUiStorage = require('gameUiStorage');
 
     class GameUi {
         constructor(elements, game) {
             this.elements = elements;
             this._savings = JSON.parse(localStorage.getItem('savings') || '[]');
             this.isPlaying = false;
-            this._difficulty = 0;
-            this._game = game;
-            this._options = {
-                player: 'Player_' + Math.ceil(Math.random() * 100000)
+            this._state = null;
+            this._playerInformation = gameUiStorage.load() || {
+                level: 0,
+                maxLevel: 30,
+                name: 'Player_' + Math.ceil(Math.random() * 100000),
+                records: [],
             };
+            this._currentType = 'passing';
+            this._currentLevel = 0;
+            this._game = game;
 
             this._gameUiSave = new GameUiSave();
             this._gameUiLoad = new GameUiLoad();
             this._gameUiMenu = new GameUiMenu();
             this._gameUiRecords = new GameUiRecords();
             this._gameUiOptions = new GameUiOptions();
-            this._gameUiNewGame = new GameUiNewGame();
+            this._gameUiTournament = new GameUiTournament();
             this._gameUiVictory = new GameUiVictory();
             this._gameUiGameOver = new GameUiGameOver();
+            this._gameUiLevels = new GameUiLevels();
 
             this._setWorkFlow();
             this._setEvents();
@@ -42,10 +50,10 @@
             this._gameUiSave.on('back', showMenu);
             this._gameUiRecords.on('back', showMenu);
             this._gameUiOptions.on('back', showMenu);
+            this._gameUiLevels.on('back', showMenu);
 
             this._gameUiLoad.on('load', (saveItem) => {
                 this._game.load(saveItem.data);
-                this._difficulty = saveItem.difficulty || 0;
                 this._continue();
             });
             this._gameUiLoad.on('update_savings', (savings) => {
@@ -62,24 +70,53 @@
                 this._render(state);
                 if (state === 'game') this._continue();
             });
-            this._gameUiNewGame.on('select_level', (difficulty) => {
-                this._difficulty = difficulty;
-                this._newGame();
+            this._gameUiTournament.on('select_level', (levelId) => {
+                this._currentType = 'tournament';
+                this._currentLevel = levelId;
+                this._newGame(levelId);
             });
             this._gameUiVictory.on('back', () => {
                 this.showBackground();
                 this._render('menu');
             });
             this._gameUiVictory.on('next', () => {
-                this._newGame();
+                if (this._currentType === 'tournament') {
+                    this._newGame(this._currentLevel);
+                } else {
+                    this._newGame(this._playerInformation.level);
+                }
             });
             this._gameUiGameOver.on('back', () => {
                 this.showBackground();
                 this._render('menu');
             });
             this._gameUiGameOver.on('next', () => {
-                this._newGame();
+                this._newGame(this._currentLevel);
             });
+            this._gameUiLevels.on('select_level', (levelId) => {
+                this._currentType = 'passing';
+                this._currentLevel = levelId;
+                this._newGame(levelId);
+            });
+        }
+
+        updateLevel() {
+            if (this._currentType === 'tournament') return;
+            if (this._currentLevel === this._playerInformation.level && this._currentLevel < 30) {
+                this._playerInformation.level += 1;
+                gameUiStorage.save(this._playerInformation);
+            }
+            if (this._currentLevel < 30) {
+                this._currentLevel += 1;
+            }
+        }
+
+        updateRecords(time) {
+            const prevTime = this._playerInformation.records[this._currentLevel];
+            if (!prevTime || prevTime >= time) {
+                this._playerInformation.records[this._currentLevel] = time;
+                gameUiStorage.save(this._playerInformation);
+            }
         }
 
         _setEvents() {
@@ -107,11 +144,9 @@
             this.hide();
         }
 
-        _newGame() {
+        _newGame(levelId) {
             this.isPlaying = true;
-            this._game.width = [11, 21, 43][this._difficulty];
-            this._game.height = [11, 21, 43][this._difficulty];
-            this._game.rePlay();
+            this._game.rePlay(levelId);
             this.hide();
         }
 
@@ -122,8 +157,9 @@
             if (this._state === 'load') this._gameUiLoad.render(this.elements.content, this._savings);
             if (this._state === 'menu') this._gameUiMenu.render(this.elements.content, this._savings, this.isPlaying);
             if (this._state === 'records') this._gameUiRecords.render(this.elements.content);
-            if (this._state === 'options') this._gameUiOptions.render(this.elements.content, this._options);
-            if (this._state === 'select_level') this._gameUiNewGame.render(this.elements.content, this._game);
+            if (this._state === 'options') this._gameUiOptions.render(this.elements.content, this._playerInformation);
+            if (this._state === 'tournament') this._gameUiTournament.render(this.elements.content, this._game);
+            if (this._state === 'levels') this._gameUiLevels.render(this.elements.content, this._playerInformation);
             if (this._state === 'victory') this._gameUiVictory.render(this.elements.content, this._game.getScore());
             if (this._state === 'game_over') this._gameUiGameOver.render(this.elements.content, this._game.getScore());
         }

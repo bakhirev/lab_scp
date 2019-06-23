@@ -68,3 +68,71 @@ body {
     height: 30%;
     z-index: 0;
 }
+
+
+.game_ui__bg__big_ring,
+.game_ui__bg__light,
+.game_ui__bg__middle_ring,
+.game_ui__bg__octopus_1,
+.game_ui__bg__octopus_2,
+.game_ui__bg__octopus_3,
+.game_ui__bg__octopus_4,
+.game_ui__bg__ripple,
+.game_ui__bg__road,
+.game_ui__bg__small_ring {
+    position: absolute;
+    z-index: 0;
+}
+.game_ui__bg__ripple {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.game_ui__bg__small_ring {
+    bottom: 43%;
+    right: 3%;
+    height: 33%;
+}
+.game_ui__bg__middle_ring {
+    bottom: 29%;
+    right: 2%;
+    height: 54%;
+}
+.game_ui__bg__big_ring {
+    right: 2%;
+    bottom: 13%;
+    height: 80%;
+}
+.game_ui__bg__road {
+    right: 3%;
+    bottom: 19%;
+    height: 51%;
+}
+.game_ui__bg__light {
+    top: -17%;
+    left: 6%;
+    height: 90%;
+    max-height: 50em;
+    transform: rotateZ(-19deg);
+}
+.game_ui__bg__octopus_1,
+.game_ui__bg__octopus_2,
+.game_ui__bg__octopus_3,
+.game_ui__bg__octopus_4 {
+    bottom: 0;
+    height: 80%;
+    max-height: 30em;
+}
+.game_ui__bg__octopus_1 {
+    left: 4%;
+}
+.game_ui__bg__octopus_2 {
+    left: 0;
+}
+.game_ui__bg__octopus_3 {
+    left: 20%;
+}
+.game_ui__bg__octopus_4 {
+    left: 32%;
+}

@@ -1,5 +1,6 @@
 (function() {
 
+    const formatting = require('formatting');
     const EventEmitter = require('EventEmitter');
     const templatingEngine = require('templatingEngine');
     const gameUiCommon = require('gameUiCommon');
@@ -11,16 +12,22 @@
             this._onNewGame = this._onNewGame.bind(this);
         }
 
-        _getContent() {
+        _getContent(milliseconds) {
+            const formattedTime = formatting.getTime(milliseconds);
+
             return [
-                gameUiCommon.getDescription('Game over!'),
+                { tag: 'div', content: [
+                    { tag: 'p', content: 'Game over!', attributes: { className: 'game_ui__modal_title' } },
+                    { tag: 'img', attributes: { src: 'images/gameplay/gameover.png', className: 'game_ui__modal_image' } },
+                    { tag: 'p', content: `Time: ${formattedTime}`, attributes: { className: 'game_ui__modal_text' } },
+                ], attributes: { className: 'game_ui__modal_window' } },
                 gameUiCommon.getSmallButton('Menu', 'back', this._onMenu),
                 gameUiCommon.getSmallButton('Replay', 'new_game', this._onNewGame)
             ];
         }
 
-        render(parentElement) {
-            templatingEngine.render(this._getContent(), parentElement);
+        render(parentElement, milliseconds) {
+            templatingEngine.render(this._getContent(milliseconds), parentElement);
         }
 
         _onMenu() {

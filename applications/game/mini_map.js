@@ -6,17 +6,32 @@
             this.context = elements.map.getContext('2d');
             this.mapLevel = null;
             this.size = {};
-            this._mode = 'big';
-            this._level = [[1]];
-            this._images = {
-                key: ''
+            this.files = {
+                card: 'card.png',
+                player: 'player.png',
+
+                door: '5.png',
+                exit: 'exit.png'
             };
+            this._mode = 'big';
+            this._textures = {};
+            this._level = [[1]];
+            this._preloadTextures();
             this._onKeyUp({ button: 0 });
 
             this._onKeyDown = this._onKeyDown.bind(this);
             this._onKeyUp = this._onKeyUp.bind(this);
             this.elements.display.addEventListener('mousedown', this._onKeyDown, false);
             this.elements.display.addEventListener('mouseup', this._onKeyUp, false);
+        }
+
+        _preloadTextures() {
+            Object.keys(this.files).forEach(id => {
+                const image = new Image();
+                image.crossOrigin = 'anonymous';
+                image.src = `./images/128x128/${this.files[id]}`;
+                this._textures[id] = image;
+            });
         }
 
         _onKeyDown(event) {
@@ -74,18 +89,39 @@
             this.context.fillRect(0, 0, this.size.width, this.size.height);
 
             this._render(gameLevel, 9, 'white');
-            this._render(gameLevel, 1, '#F2ABB3');
-            this._render(gameLevel, 10, 'red');
-            this._render(gameLevel, 11, 'green');
-            this._render(gameLevel, 12, 'blue');
+
+            this._render(gameLevel, 10, 'white');
+            this._render(gameLevel, 11, 'white');
+            this._render(gameLevel, 12, 'white');
+            this._renderTexture(gameLevel, 10, 'card');
+            this._renderTexture(gameLevel, 11, 'card');
+            this._renderTexture(gameLevel, 12, 'card');
+
             this._render(gameLevel, 20, '#3C8381');
+            this._render(gameLevel, 22, '#3CA3A1');
             this._render(gameLevel, 21, '#99FF8D');
-            this._render(gameLevel, 100, 'yellow');
+
             this._renderPosition(position, '#70019D');
 
+            this._render(gameLevel, 1, 'white');
+            this._renderTexture(gameLevel, 1, 'door');
+            this._renderTexture(gameLevel, 100, 'exit');
+
             if (samosborDistance < Infinity) {
-                this._renderDistance(samosborPosition, 10, '#422749');
+                this._renderDistance(samosborPosition, 20, 'black');
             }
+        }
+
+        _renderTexture(gameLevel, code, textureId) {
+            gameLevel.forEach((row, rowIndex) => {
+                row.forEach((currentCode, columnIndex) => {
+                    const y = this.size.cell * rowIndex;
+                    const x = this.size.cell * columnIndex;
+                    const isVisited = this.mapLevel[rowIndex][columnIndex] === 1;
+                    if (currentCode === code && isVisited) this.context.drawImage(this._textures[textureId], x, y, this.size.cell, this.size.cell);
+
+                });
+            });
         }
 
         _render(gameLevel, code, color) {
@@ -114,9 +150,12 @@
 
         _renderPosition(position, color) {
             this.context.fillStyle = color;
-            const y = this.size.cell * position.row;
-            const x = this.size.cell * position.column;
-            this.context.fillRect(x, y, this.size.cell, this.size.cell);
+            const r = this.size.cell / 2;
+            const y = this.size.cell * position.row + r;
+            const x = this.size.cell * position.column + r;
+            this.context.beginPath();
+            this.context.arc(x, y, r * 0.8, 0, 2 * Math.PI);
+            this.context.fill();
         }
     }
 
