@@ -80,7 +80,7 @@
             return [
                 tabsTemplate,
                 tableTemplate,
-                gameUiCommon.getButton('Back', 'back', this._onMenu)
+                gameUiCommon.getButton('back', 'back', this._onMenu)
             ];
         }
 

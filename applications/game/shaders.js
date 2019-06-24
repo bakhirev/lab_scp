@@ -100,7 +100,7 @@
 
                 'void main(void) {',
                 '  vec4 textureColor = texture2D(u_sampler, v_texture);',
-                '  vec3 sunnyColor = vec3(0.9, 0.6, 0.3);',
+                '  vec3 sunnyColor = vec3(0.8, 0.5, 0.25);',
                 // '  vec3 sunnyColor = vec3(0.6, 0.9, 0.3);',
 
                 '  float ambientStrength = 0.8;', // фоновое освещение

@@ -54,6 +54,10 @@
             const isPass = code === 10 || code === 11 || code === 12;
             if (isPass && (isFree.top || isFree.bottom)) this._addTopWall(textureSlots[4], minX + 50, 5, minZ + halfSize, miniSize);
             if (isPass && (isFree.right || isFree.left)) this._addRightWall(textureSlots[4], maxX - halfSize, 5, minZ + 50, miniSize);
+
+            const isGift = code === 13;
+            if (isGift && (isFree.top || isFree.bottom)) this._addTopWall(textureSlots[5], minX + 50, 5, minZ + halfSize, miniSize);
+            if (isGift && (isFree.right || isFree.left)) this._addRightWall(textureSlots[5], maxX - halfSize, 5, minZ + 50, miniSize);
         },
         _getFreeArea(level, row, column) {
             return {

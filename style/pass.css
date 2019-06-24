@@ -1,15 +1,10 @@
 .pass__container {
     position: absolute;
-    top: 12em;
-    left: 1em;
+    bottom: 1em;
+    right: 1em;
 
-    display: flex;
-    width: 10em;
-    height: 69px;
-
-    justify-content: space-between;
-    text-align: justify;
-    text-align-last: justify;
+    display: block;
+    text-align: right;
 
     box-sizing: border-box;
     white-space: nowrap;
@@ -18,13 +13,17 @@
 
 .pass__key {
     display: inline-block;
-    height: 100%;
-    width: 27%;
+    height: 4em;
+    width: 4em;
     padding: 0;
+    margin-left: .5em;
 
     text-align: center;
     box-sizing: border-box;
 
-    border-radius: .5em;
-    background-color: rgba(235, 82, 18, 0.8);
+    background-color: transparent;
+    background-image: url('../images/128x128/card.png');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center center;
 }

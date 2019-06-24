@@ -51,7 +51,7 @@
         _getContent(playerInformation) {
             return [
                 this._getLevelList(playerInformation),
-                gameUiCommon.getButton('Back', 'back', this._onMenu)
+                gameUiCommon.getButton('back', 'back', this._onMenu)
             ];
         }
 

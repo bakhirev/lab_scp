@@ -13,8 +13,8 @@
 }
 
 .custom__pass_title {
-    font-family: "Number", Verdana, serif;
-    font-size: 1em;
+    font-family: Verdana, serif;
+    font-size: .8em;
     font-weight: 100;
     line-height: 1.3;
 
@@ -26,7 +26,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-decoration: none;
-    letter-spacing: 3px;
     text-align: left;
 
     color: white;

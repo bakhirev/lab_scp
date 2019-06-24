@@ -22,9 +22,8 @@
             });
         }
 
-        checkCode(code, levelGame, levelPosition) {
+        checkCode(code, levelGame) {
             if (this._correctKeys.indexOf(code) === -1) return false;
-            levelGame[levelPosition.row][levelPosition.column] = 9;
             this._keys.push(code);
             this._render();
             if (this._keys.length === this._correctKeys.length) {

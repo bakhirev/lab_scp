@@ -4,6 +4,7 @@
     const EventEmitter = require('EventEmitter');
     const templatingEngine = require('templatingEngine');
     const gameUiCommon = require('gameUiCommon');
+    const language = require('language');
 
     class GameUiVictory {
         constructor() {
@@ -14,12 +15,12 @@
 
         _getContent(milliseconds) {
             const formattedTime = formatting.getTime(milliseconds);
+            const message = language.get('time') + ' ' + formattedTime;
 
             return [
                 { tag: 'div', content: [
-                    { tag: 'p', content: 'Victory!', attributes: { className: 'game_ui__modal_title' } },
+                    { tag: 'p', content: message, attributes: { className: 'game_ui__modal_title' } },
                     { tag: 'img', attributes: { src: 'images/gameplay/win.png', className: 'game_ui__modal_image' } },
-                    { tag: 'p', content: `Time: ${formattedTime}`, attributes: { className: 'game_ui__modal_text' } },
                 ], attributes: { className: 'game_ui__modal_window' } },
                 gameUiCommon.getSmallButton('Menu', 'back', this._onMenu),
                 gameUiCommon.getSmallButton('Next', 'new_game', this._onNewGame)

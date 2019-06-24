@@ -35,7 +35,7 @@
             const content = this._getSavings();
             return [
                 { tag: 'div', content: content, attributes: { className: 'game_ui__list' } },
-                gameUiCommon.getButton('Back', 'back', this._onMenu)
+                gameUiCommon.getButton('back', 'back', this._onMenu)
             ]
         }
 

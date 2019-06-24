@@ -11,9 +11,9 @@
 
         _getContent() {
             return [
-                gameUiCommon.getButton('Easy', 'level_easy', this._onMenu.bind(this, 2)),
-                gameUiCommon.getButton('Medium', 'level_medium', this._onMenu.bind(this, 10)),
-                gameUiCommon.getButton('Hard', 'level_hard', this._onMenu.bind(this, 20))
+                gameUiCommon.getButton('easy', 'level_easy', this._onMenu.bind(this, 2)),
+                gameUiCommon.getButton('medium', 'level_medium', this._onMenu.bind(this, 10)),
+                gameUiCommon.getButton('hard', 'level_hard', this._onMenu.bind(this, 20))
             ];
         }
 

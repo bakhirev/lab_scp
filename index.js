@@ -7,11 +7,12 @@
 
     const textures = [
         // './images/textures/kirpich.jpg',
-        './images/textures/laminat.jpg',
-        './images/textures/2.jpg',
-        './images/textures/3.jpg',
-        './images/textures/6.jpg', // kirpich
-        './images/textures/pass.png'
+        './images/textures/floor.jpg',
+        './images/textures/wall.jpg',
+        './images/textures/roof.jpg',
+        './images/textures/door.jpg', // kirpich
+        './images/textures/pass.png',
+        './images/textures/gift.png'
         //
     ];
 

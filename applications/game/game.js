@@ -31,6 +31,7 @@
 
             this._setWorkFlow(images);
             this._setObjects();
+            this.resize();
         }
 
         _setWorkFlow(images) {
@@ -111,10 +112,13 @@
                 this.cameraPosition.rotate[1] += this._joystick.getDeltaRotate();
 
                 const code = this._levelGame[this._levelPosition.row][this._levelPosition.column];
-                if (code === 10 || code === 11 || code === 12) this._audio.playOnce(10);
-                const isNeedReRender = this._gamePass.checkCode(code, this._levelGame, this._levelPosition);
-                if (isNeedReRender) this._render.clearCash();
-
+                const isStuff = [10, 11, 12, 13].includes(code);
+                if (isStuff) {
+                    this._audio.playOnce(10);
+                    this._levelGame[this._levelPosition.row][this._levelPosition.column] = 9;
+                    this._gamePass.checkCode(code, this._levelGame);
+                    this._render.clearCash();
+                }
 
                 const timeShift = this._updatePrevTime();
                 const currentTimeShift = this._gameTime.getTimeShift(code, timeShift);
@@ -160,9 +164,7 @@
         }
 
         resize() {
-            this._map.resize({ width: 200, height: 200 });
             this._render.resize();
-            this._render();
         }
 
         _setStyleForDisplayElements(className) {

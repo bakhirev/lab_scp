@@ -15,7 +15,7 @@
             return [
                 gameUiCommon.getInput(options.player, 'Enter name', this._onKeyDown, this._onSave),
                 gameUiCommon.getInput('', 'Enter code', this._onKeyDown, this._onSave),
-                gameUiCommon.getButton('Back', 'back', this._onMenu)
+                gameUiCommon.getButton('back', 'back', this._onMenu)
             ];
         }
 

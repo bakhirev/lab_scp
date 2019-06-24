@@ -44,7 +44,7 @@
     left: 1em;
 
     display: block;
-    width: 10em;
+    width: 9em;
 
     box-sizing: border-box;
     padding: .5em;
@@ -88,7 +88,7 @@
 }
 
 .display__value {
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .display__description {

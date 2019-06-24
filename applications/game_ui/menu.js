@@ -11,11 +11,11 @@
 
         _getContent(savings, isPlaying) {
             return [
-                isPlaying ? gameUiCommon.getButton('Continue', 'back', this._select.bind(this, 'game')) : null,
-                gameUiCommon.getButton('Tournament', 'new_game', this._select.bind(this, 'tournament')),
-                gameUiCommon.getButton('Levels', 'new_game', this._select.bind(this, 'levels')),
-                savings.length ? gameUiCommon.getButton('Load', 'load', this._select.bind(this, 'load')) : null,
-                isPlaying ? gameUiCommon.getButton('Save', 'save', this._select.bind(this, 'save')) : null,
+                isPlaying ? gameUiCommon.getButton('continue', 'back', this._select.bind(this, 'game')) : null,
+                gameUiCommon.getButton('tournament', 'new_game', this._select.bind(this, 'tournament')),
+                gameUiCommon.getButton('levels', 'new_game', this._select.bind(this, 'levels')),
+                savings.length ? gameUiCommon.getButton('load', 'load', this._select.bind(this, 'load')) : null,
+                isPlaying ? gameUiCommon.getButton('save', 'save', this._select.bind(this, 'save')) : null,
                 // gameUiCommon.getButton('Records', 'records', this._select.bind(this, 'records')),
                 // gameUiCommon.getButton('Options', 'options', this._select.bind(this, 'options'))
             ];

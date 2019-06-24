@@ -9,9 +9,9 @@
             this.files = {
                 card: 'card.png',
                 player: 'player.png',
-
                 door: '5.png',
-                exit: 'exit.png'
+                exit: 'exit.png',
+                gift: 'gift.png'
             };
             this._mode = 'big';
             this._textures = {};
@@ -29,7 +29,7 @@
             Object.keys(this.files).forEach(id => {
                 const image = new Image();
                 image.crossOrigin = 'anonymous';
-                image.src = `./images/128x128/${this.files[id]}`;
+                image.src = `./images/map/${this.files[id]}`;
                 this._textures[id] = image;
             });
         }
@@ -70,6 +70,8 @@
             if (!size.width) size.width = defaultSize.width || 0;
             if (!size.height) size.height = defaultSize.height || 0;
             this._resize(size);
+            this.elements.map.setAttribute('width', `${this.size.width}px`);
+            this.elements.map.setAttribute('height', `${this.size.height}px`);
         }
 
         _resize(size) {
@@ -93,9 +95,11 @@
             this._render(gameLevel, 10, 'white');
             this._render(gameLevel, 11, 'white');
             this._render(gameLevel, 12, 'white');
+            this._render(gameLevel, 13, 'white');
             this._renderTexture(gameLevel, 10, 'card');
             this._renderTexture(gameLevel, 11, 'card');
             this._renderTexture(gameLevel, 12, 'card');
+            this._renderTexture(gameLevel, 13, 'gift');
 
             this._render(gameLevel, 20, '#3C8381');
             this._render(gameLevel, 22, '#3CA3A1');
@@ -117,9 +121,8 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = 1; // this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode === code && isVisited) this.context.drawImage(this._textures[textureId], x, y, this.size.cell, this.size.cell);
-
                 });
             });
         }
@@ -130,7 +133,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = 1; // this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode === code && isVisited) this.context.fillRect(x, y, this.size.cell, this.size.cell);
                 });
             });
@@ -142,7 +145,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = 1; // this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode !== 0 && currentCode < maxDistance && isVisited) this.context.fillRect(x, y, this.size.cell, this.size.cell);
                 });
             });

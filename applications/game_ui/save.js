@@ -56,9 +56,9 @@
 
         _getInput() {
             return [
-                gameUiCommon.getInput('', 'Enter title', this._onKeyDown, this._onSave),
+                gameUiCommon.getInput('', 'enterTitle', this._onKeyDown, this._onSave),
                 { tag: 'div', content: this._getList(), attributes: { className: 'game_ui__list' } },
-                gameUiCommon.getButton('Back', 'back', this._onMenu)
+                gameUiCommon.getButton('back', 'back', this._onMenu)
             ];
         }
 

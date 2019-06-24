@@ -12,6 +12,7 @@
     const GameUiGameOver = require('GameUiGameOver');
     const GameUiLevels = require('GameUiLevels');
     const gameUiStorage = require('gameUiStorage');
+    const language = require('language');
 
     class GameUi {
         constructor(elements, game) {
@@ -20,10 +21,12 @@
             this.isPlaying = false;
             this._state = null;
             this._playerInformation = gameUiStorage.load() || {
-                level: 0,
+                level: 4,
                 maxLevel: 30,
                 name: 'Player_' + Math.ceil(Math.random() * 100000),
                 records: [],
+                achievements: [],
+                things: []
             };
             this._currentType = 'passing';
             this._currentLevel = 0;
