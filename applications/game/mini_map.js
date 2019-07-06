@@ -124,7 +124,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = 1; //this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode === code && isVisited) this.context.drawImage(this._textures[textureId], x, y, this.size.cell, this.size.cell);
                 });
             });
@@ -136,7 +136,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = 1; //this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode === code && isVisited) this.context.fillRect(x, y, this.size.cell, this.size.cell);
                 });
             });
@@ -148,7 +148,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = 1; //this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode !== 0 && currentCode < maxDistance && isVisited) this.context.fillRect(x, y, this.size.cell, this.size.cell);
                 });
             });
