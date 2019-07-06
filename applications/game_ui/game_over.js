@@ -22,8 +22,8 @@
                     { tag: 'p', content: message, attributes: { className: 'game_ui__modal_title' } },
                     { tag: 'img', attributes: { src: 'images/gameplay/gameover.png', className: 'game_ui__modal_image' } },
                 ], attributes: { className: 'game_ui__modal_window' } },
-                gameUiCommon.getSmallButton('Menu', 'back', this._onMenu),
-                gameUiCommon.getSmallButton('Replay', 'new_game', this._onNewGame)
+                gameUiCommon.getSmallButton('menu', 'back', this._onMenu),
+                gameUiCommon.getSmallButton('replay', 'new_game', this._onNewGame)
             ];
         }
 

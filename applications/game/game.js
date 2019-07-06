@@ -28,6 +28,7 @@
             this._distance = 1;
             this._isEnd = false;
             this._levelPosition = {};
+            this._levelId = 0;
 
             this._setWorkFlow(images);
             this._setObjects();
@@ -62,6 +63,7 @@
                 rotate: [0, 0, 0]
             };
             const [width, height] = gameLevelConfig.getWidthHeight(levelId);
+            this._levelId = levelId;
             this.width = width;
             this.height = height;
             this._levelPosition = {};
@@ -112,12 +114,15 @@
                 this.cameraPosition.rotate[1] += this._joystick.getDeltaRotate();
 
                 const code = this._levelGame[this._levelPosition.row][this._levelPosition.column];
-                const isStuff = [10, 11, 12, 13].includes(code);
+                const isStuff = [10, 11, 12, 13, 14].includes(code);
                 if (isStuff) {
                     this._audio.playOnce(10);
                     this._levelGame[this._levelPosition.row][this._levelPosition.column] = 9;
                     this._gamePass.checkCode(code, this._levelGame);
                     this._render.clearCash();
+                    if (code === 14) {
+                        this._gamePlayer.health = 100;
+                    }
                 }
 
                 const timeShift = this._updatePrevTime();
@@ -133,6 +138,10 @@
                 this._gamePlayer.step(timeShift, code, samosborDistance);
                 if (!this._isEnd) this._audio.step(timeShift, code);
                 this._draw(code, samosborDistance);
+
+                if (code === 13) {
+                    this._eventEmitter.emit('loot', gameLevelGame.getRandomLoot(this._levelId));
+                }
             }, delay);
         }
 

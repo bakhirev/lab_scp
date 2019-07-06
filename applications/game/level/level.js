@@ -63,7 +63,6 @@
         print(level) {
             console.log(level.map(row => row.map(v => v ? '#' : ' ').join(' ')).join('\n'));
         },
-
     };
 
     module.level = methods;

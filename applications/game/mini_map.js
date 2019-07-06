@@ -11,7 +11,8 @@
                 player: 'player.png',
                 door: '5.png',
                 exit: 'exit.png',
-                gift: 'gift.png'
+                gift: 'gift.png',
+                medical: 'medical.png'
             };
             this._mode = 'big';
             this._textures = {};
@@ -96,10 +97,12 @@
             this._render(gameLevel, 11, 'white');
             this._render(gameLevel, 12, 'white');
             this._render(gameLevel, 13, 'white');
+            this._render(gameLevel, 14, 'white');
             this._renderTexture(gameLevel, 10, 'card');
             this._renderTexture(gameLevel, 11, 'card');
             this._renderTexture(gameLevel, 12, 'card');
             this._renderTexture(gameLevel, 13, 'gift');
+            this._renderTexture(gameLevel, 14, 'medical');
 
             this._render(gameLevel, 20, '#3C8381');
             this._render(gameLevel, 22, '#3CA3A1');
@@ -121,7 +124,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = 1; // this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = 1; //this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode === code && isVisited) this.context.drawImage(this._textures[textureId], x, y, this.size.cell, this.size.cell);
                 });
             });
@@ -133,7 +136,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = 1; // this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = 1; //this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode === code && isVisited) this.context.fillRect(x, y, this.size.cell, this.size.cell);
                 });
             });
@@ -145,7 +148,7 @@
                 row.forEach((currentCode, columnIndex) => {
                     const y = this.size.cell * rowIndex;
                     const x = this.size.cell * columnIndex;
-                    const isVisited = 1; // this.mapLevel[rowIndex][columnIndex] === 1;
+                    const isVisited = 1; //this.mapLevel[rowIndex][columnIndex] === 1;
                     if (currentCode !== 0 && currentCode < maxDistance && isVisited) this.context.fillRect(x, y, this.size.cell, this.size.cell);
                 });
             });

@@ -22,8 +22,8 @@
                     { tag: 'p', content: message, attributes: { className: 'game_ui__modal_title' } },
                     { tag: 'img', attributes: { src: 'images/gameplay/win.png', className: 'game_ui__modal_image' } },
                 ], attributes: { className: 'game_ui__modal_window' } },
-                gameUiCommon.getSmallButton('Menu', 'back', this._onMenu),
-                gameUiCommon.getSmallButton('Next', 'new_game', this._onNewGame)
+                gameUiCommon.getSmallButton('menu', 'back', this._onMenu),
+                gameUiCommon.getSmallButton('next', 'new_game', this._onNewGame)
             ];
         }
 

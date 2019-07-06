@@ -58,6 +58,10 @@
             const isGift = code === 13;
             if (isGift && (isFree.top || isFree.bottom)) this._addTopWall(textureSlots[5], minX + 50, 5, minZ + halfSize, miniSize);
             if (isGift && (isFree.right || isFree.left)) this._addRightWall(textureSlots[5], maxX - halfSize, 5, minZ + 50, miniSize);
+
+            const isMedicalKit = code === 14;
+            if (isMedicalKit && (isFree.top || isFree.bottom)) this._addTopWall(textureSlots[6], minX + 50, 5, minZ + halfSize, miniSize);
+            if (isMedicalKit && (isFree.right || isFree.left)) this._addRightWall(textureSlots[6], maxX - halfSize, 5, minZ + 50, miniSize);
         },
         _getFreeArea(level, row, column) {
             return {

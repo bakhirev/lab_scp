@@ -21,7 +21,8 @@
             if (levelId > 5) this._addPass(gameLevel, distance.deadlocks[0], 10); // pass
             if (levelId > 7) this._addPass(gameLevel, distance.deadlocks[1], 11);
             if (levelId > 9) this._addPass(gameLevel, distance.deadlocks[2], 12);
-            if (levelId > 3) this._addPass(gameLevel, distance.deadlocks[0], 13);
+            if (levelId > 1) this._addPass(gameLevel, distance.deadlocks[0], 13); // loot
+            if (levelId > 8) this._addPass(gameLevel, distance.deadlocks[0], 14); // medical
 
             gameLevel[distance.end.row][distance.end.column] = 100; // ends
 
@@ -104,6 +105,11 @@
                         return (columnIndex >= part.begin[1] && columnIndex <= part.end[1]) ? newCode : code;
                     }) : row
             });
+        },
+        getRandomLoot(levelId) {
+            let lootId = levelId - 2;
+            if (lootId > 11) return Math.ceil(Math.random() * 10);
+            return lootId;
         }
     };
 

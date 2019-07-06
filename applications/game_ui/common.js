@@ -35,7 +35,7 @@
             };
         },
         getSmallButton(languageId, iconId, callback) {
-            return this.getButton(language.get(languageId), iconId, callback, 'game_ui__sub_button');
+            return this.getButton(languageId, iconId, callback, 'game_ui__sub_button');
         },
         getDescription(text) {
             return {

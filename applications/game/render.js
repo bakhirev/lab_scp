@@ -110,8 +110,8 @@
         }
 
         _getDefaultLookAtMatrix(position) {
-            const cameraTarget = [position.move[0], 25, position.move[2] - 1];
-            const cameraPosition = [position.move[0], 25, position.move[2]];
+            const cameraTarget = [position.move[0], 45, position.move[2] - 1];
+            const cameraPosition = [position.move[0], 45, position.move[2]];
             const up = [0, 1, 0];
             return webGlMatrix.lookAt(cameraPosition, cameraTarget, up);
         }

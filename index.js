@@ -7,12 +7,13 @@
 
     const textures = [
         // './images/textures/kirpich.jpg',
-        './images/textures/floor.jpg',
-        './images/textures/wall.jpg',
-        './images/textures/roof.jpg',
+        './images/textures/packages/1/floor.jpg',
+        './images/textures/packages/1/wall.jpg',
+        './images/textures/packages/1/roof.jpg',
         './images/textures/door.jpg', // kirpich
         './images/textures/pass.png',
-        './images/textures/gift.png'
+        './images/textures/gift.png',
+        './images/textures/medical.png'
         //
     ];
 
@@ -61,6 +62,9 @@
         });
         const gameUi = new GameUi(elementsUi, game);
 
+        game.on('loot', function(lootId) {
+            gameUi.addLoot(lootId);
+        });
         game.on('victory', function(time) {
             gameUi.updateRecords(time);
             gameUi.updateLevel();
